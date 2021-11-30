@@ -54,10 +54,13 @@ public class BeerOrderStatusChangeEventListener {
                 .build();
 
         try{
-            log.debug("Posting to callback url");
+            log.info("Posting to callback url");
             restTemplate.postForObject(event.getBeerOrder().getOrderStatusCallbackUrl(), update, String.class);
-        } catch (Throwable t){
-            log.error("Error Preforming callback for order: " + event.getBeerOrder().getId(), t);
+            log.info("Posted callback to url: " + event);
+        } catch (Exception e){
+            log.error("Error Preforming callback for order: " + event.getBeerOrder().getId());
+        } finally {
+            log.info("finally: " + event);
         }
     }
 }
